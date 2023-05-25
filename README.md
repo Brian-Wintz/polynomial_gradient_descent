@@ -9,7 +9,7 @@ The purpose of this project was to better understand how gradient descent works 
   * Provides a string method to construct a string for the polynomial instance (used in the graph title)
 * Defined a gradient_descent function which executes the gradient descent processing based on a starting point, gradient function, learning rate and number of iterations
 
-![image](https://github.com/Brian-Wintz/polynomial_gradient_descent/assets/133924124/284505d0-d0ac-4d91-a039-627e4b77c126)
+![image](https://github.com/Brian-Wintz/polynomial_gradient_descent/assets/133924124/4eded627-a647-40a9-8522-f3cf8d3e69c5)
 
 Observations:
 Not all polynomials will have a local (or global) minima, since it might not ever encounter a "valley" or "bump" in the curve.  In those cases where there is no minima the gradient descent eventually exceeds the numerical limits of the language.
