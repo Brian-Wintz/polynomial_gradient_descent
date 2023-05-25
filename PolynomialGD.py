@@ -1,4 +1,29 @@
 import matplotlib.pyplot as plt
+import math
+
+class Sine:
+    def __init__(self,period,amplitude):
+        self.period=period
+        if self.period==0:
+            self.period=1
+        self.amplitude=amplitude
+        if self.amplitude==0:
+            self.amplitude=1.
+
+    def calc(self,x):
+        return self.amplitude*math.sin(x*self.period)
+
+    def diff(self,x):
+        return self.amplitude*math.cos(x*self.period)
+
+    def string(self):
+        amplitude_string=""
+        period_string=""
+        if self.amplitude!=1:
+            amplitude_string=str(self.amplitude)+"*"
+        if self.period!=1:
+            period_string=str(self.period)+"*"
+        return amplitude_string+"sine("+period_string+"x)"
 
 class Polynomial:
     def __init__(self,first,*args):
@@ -7,12 +32,14 @@ class Polynomial:
         for i in range(len(args)):
             a=args[i]
             self.args.append(a)
+
     def calc(self,x):
         y=0
         for i in range(len(self.args)):
             y=y+self.args[i]*x**i
             #print(f"index: {i} this: {self.args[i]*x**i} sum: {y}")
         return y
+
     def diff(self,x):
         y=0
         for i in range(len(self.args)):
@@ -61,10 +88,11 @@ def gradient_descent(gradient, start, learn_rate, n_iter):
         #print(f"diff: {diff} vector: {vector}")
     return vector
 
+#poly=Sine(1,2)
 poly=Polynomial(2.0,-1,4.0,-0.5,0.25,0.125)
 
 # Note that not all polynomial functions will have a zero differential value, so this gradient descent can explode
-gradient=gradient_descent(poly.diff,2,0.1,5)
+gradient=gradient_descent(poly.diff,2,0.1,10)
 print(f"gradient: {gradient} value: {poly.calc(gradient)}")
 
 # Print graph of polynomial function and derivative of polynomial function
@@ -83,19 +111,18 @@ for x in xvals:
     y=poly.calc(x)
     yvals.append(y)
     diffvals.append(d)
-    #print(f"x: {x} y: {y} d: {d}")
     if y>maxyval:
         maxyval=y
     if d>maxyval:
         maxyval=d
-    if(d>-1 and d<1 and d<minyval):
+    if(d<minyval):
         minxval=x
         minyval=d
+        print(f"x: {x} y: {y} d: {d} minxval: {minxval} minyval: {minyval}")
 
-
-print(f"{xvals}")
-print(f"{yvals}")
-print(f"{diffvals}")
+print(f"xvals: {xvals}")
+print(f"yvals: {yvals}")
+print(f"diff: {diffvals}")
 
 # b is for "solid blue line"
 plt.plot(xvals, yvals, 'blue', label='f(x)')
