@@ -92,8 +92,18 @@ def gradient_descent(gradient, start, learn_rate, n_iter):
 poly=Polynomial(2.0,-1,4.0,-0.5,0.25,0.125)
 
 # Note that not all polynomial functions will have a zero differential value, so this gradient descent can explode
-gradient=gradient_descent(poly.diff,2,0.1,10)
-print(f"gradient: {gradient} value: {poly.calc(gradient)}")
+x=2
+y=0
+xgrad=[]
+ygrad=[]
+for i in range(5):
+    y=poly.calc(x)
+    xgrad.append(x)
+    ygrad.append(y)
+    x=gradient_descent(poly.diff,x,0.1,1)
+print(f"xgrad: {xgrad} ygrad: {ygrad}")
+#gradient=gradient_descent(poly.diff,2,0.1,10)
+#print(f"gradient: {gradient} value: {poly.calc(gradient)}")
 
 # Print graph of polynomial function and derivative of polynomial function
 xvals=[]
@@ -115,11 +125,10 @@ for x in xvals:
         maxyval=y
     if d>maxyval:
         maxyval=d
-    if(d<minyval):
+    if(y<minyval and (d>-1 and d<1)):
         minxval=x
-        minyval=d
-        print(f"x: {x} y: {y} d: {d} minxval: {minxval} minyval: {minyval}")
-
+        minyval=y
+        print(f"A: x: {x} y: {y} d: {d} minxval: {minxval} minyval: {minyval}")
 print(f"xvals: {xvals}")
 print(f"yvals: {yvals}")
 print(f"diff: {diffvals}")
@@ -127,6 +136,7 @@ print(f"diff: {diffvals}")
 # b is for "solid blue line"
 plt.plot(xvals, yvals, 'blue', label='f(x)')
 plt.plot(xvals, diffvals, 'r--', label="f'(x)")
+plt.plot(xgrad,ygrad,'ro',label="gradient")
 plt.plot([xvals[0],xvals[len(xvals)-1]], [0,0], 'black',linewidth=2.0)
 plt.title('Polynomial: '+poly.string())
 plt.xlabel('x')
